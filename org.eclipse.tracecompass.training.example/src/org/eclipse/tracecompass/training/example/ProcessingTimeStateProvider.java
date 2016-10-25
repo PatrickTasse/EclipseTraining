@@ -43,6 +43,7 @@ public class ProcessingTimeStateProvider extends AbstractTmfStateProvider {
          * Requester
          *     |
          *     |-<requester> -> State Value
+         *            |---<id> -> State Value
          *
          * State Value:
          * -----------
@@ -72,6 +73,21 @@ public class ProcessingTimeStateProvider extends AbstractTmfStateProvider {
             Object stateValue = null;
             updateRequesterState(stateSystem, event, stateValue);
             break;
+        }
+
+        case IEventConstants.PROCESS_INIT_EVENT: {
+            // TODO change state of attribute Requester/<requester>/<id> to INITIALIZING
+            return;
+        }
+
+        case IEventConstants.PROCESS_START_EVENT: {
+            // TODO change state of attribute Requester/<requester>/<id> to PROCESSING
+            return;
+        }
+
+        case IEventConstants.PROCESS_END_EVENT: {
+            // TODO change state of attribute Requester/<requester>/<id> to null state
+            return;
         }
 
         default:
