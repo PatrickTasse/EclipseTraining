@@ -34,7 +34,7 @@
       </output>
       <output
             class="org.eclipse.tracecompass.tmf.ui.analysis.TmfAnalysisViewOutput"
-            id="org.eclipse.tracecompass.training.processing.statistics">
+            id="org.eclipse.tracecompass.analysis.timing.ui.segstore.statistics:org.eclipse.tracecompass.training.processing.module">
          <analysisModuleClass
                class="org.eclipse.tracecompass.training.example.processing.ProcessingLatencyModule">
          </analysisModuleClass>
@@ -77,8 +77,8 @@
             restorable="true">
       </view>
       <view
-            class="org.eclipse.tracecompass.training.example.processing.views.ProcessingLatencyStatisticsView"
-            id="org.eclipse.tracecompass.training.processing.statistics"
+            class="org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.statistics.SegmentStoreStatisticsView"
+            id="org.eclipse.tracecompass.analysis.timing.ui.segstore.statistics:org.eclipse.tracecompass.training.processing.module"
             name="Latency Statistics"
             restorable="true">
       </view>
