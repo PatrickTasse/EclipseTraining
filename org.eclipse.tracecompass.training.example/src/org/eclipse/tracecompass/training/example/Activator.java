@@ -24,7 +24,6 @@ public class Activator extends AbstractUIPlugin implements IStartup {
     // The shared instance
     private static Activator plugin;
     private static BundleContext bundleContext;
-    private static EventReader fEventReader;
 
     /**
      * Constructor
@@ -37,7 +36,6 @@ public class Activator extends AbstractUIPlugin implements IStartup {
         super.start(context);
         plugin = this;
         bundleContext = context;
-        fEventReader = new EventReader();
     }
 
     @Override
@@ -45,9 +43,6 @@ public class Activator extends AbstractUIPlugin implements IStartup {
         plugin = null;
         super.stop(context);
         bundleContext = null;
-        if (fEventReader != null) {
-            fEventReader.dispose();
-        }
     }
 
     /**
