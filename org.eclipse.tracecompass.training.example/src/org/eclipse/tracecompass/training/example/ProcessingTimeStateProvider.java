@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016 Ericsson
+ * Copyright (c) 2016, 2020 Ericsson
  *
  * All rights reserved. This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License v1.0 which
@@ -39,11 +39,18 @@ public class ProcessingTimeStateProvider extends AbstractTmfStateProvider {
         /**
          * Attribute tree:
          * --------------
+         * Receiver
+         *     |
+         *     |-<receiver> -> Requester Name
          * Requester
          *     |
          *     |-<requester> -> State Value
          *            |---<id> -> State Value
          *                 |---number -> Number Value
+         *
+         * Requester Name:
+         * -----------
+         * Store name of <requester>
          *
          * State Value:
          * -----------
@@ -55,6 +62,7 @@ public class ProcessingTimeStateProvider extends AbstractTmfStateProvider {
          *
          */
         switch (event.getName()) {
+        // TODO add case for ball request and reply and change state of attribute Receiver/<receiver>
         case IEventConstants.CREATE_EVENT: {
             Integer stateValue = IEventConstants.ProcessingStates.INITIALIZING.ordinal();
             updateRequesterState(stateSystem, event, stateValue);
