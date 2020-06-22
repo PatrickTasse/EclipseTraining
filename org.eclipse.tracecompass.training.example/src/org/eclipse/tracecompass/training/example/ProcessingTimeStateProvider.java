@@ -62,7 +62,16 @@ public class ProcessingTimeStateProvider extends AbstractTmfStateProvider {
          *
          */
         switch (event.getName()) {
-        // TODO add case for ball request and reply and change state of attribute Receiver/<receiver>
+        case IEventConstants.BALL_REQUEST: {
+            updateReceiverState(stateSystem, event);
+            return;
+        }
+
+        case IEventConstants.BALL_REPLY: {
+            updateReceiverState(stateSystem, event);
+            return;
+        }
+
         case IEventConstants.CREATE_EVENT: {
             Integer stateValue = IEventConstants.ProcessingStates.INITIALIZING.ordinal();
             updateRequesterState(stateSystem, event, stateValue);
@@ -108,6 +117,28 @@ public class ProcessingTimeStateProvider extends AbstractTmfStateProvider {
         default:
             return;
         }
+    }
+
+    private static void updateReceiverState(ITmfStateSystemBuilder stateSystem, ITmfEvent event) {
+        String receiver;
+        String value;
+        if (event.getName().equals(IEventConstants.BALL_REQUEST)) {
+            // get event field with name
+            receiver = event.getContent().getFieldValue(String.class, "receiver");
+            value = event.getContent().getFieldValue(String.class, "sender");
+        } else {
+            receiver = event.getContent().getFieldValue(String.class, "sender");
+            value = null;
+        }
+        // get quark of attribute for path Receiver/receiver
+        int quark = stateSystem.getQuarkAbsoluteAndAdd("Receiver", receiver);
+
+        // get time of event
+        long t = event.getTimestamp().getValue();
+
+        // apply state change
+        stateSystem.modifyAttribute(t, value, quark);
+        return;
     }
 
     private static void updateRequesterState(ITmfStateSystemBuilder stateSystem, ITmfEvent event, Object stateValue) {
