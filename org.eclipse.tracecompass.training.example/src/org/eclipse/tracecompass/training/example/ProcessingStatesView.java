@@ -20,12 +20,12 @@ public class ProcessingStatesView extends BaseDataProviderTimeGraphView {
     private static class FilterLabelProvider extends TreeLabelProvider {}
 
     public ProcessingStatesView() {
-        // TODO: Call super with view ID, presentation provider and data provider ID
-//        super(ID, new BaseDataProviderTimeGraphPresentationProvider(), ProcessingStatesDataProvider.ID);
+        // Call super with view ID, presentation provider and data provider ID
+        super(ID, new BaseDataProviderTimeGraphPresentationProvider(), ProcessingStatesDataProvider.ID);
 
-        // TODO: Enable entry filtering by setting filter columns and label provider
-//        setFilterColumns(FILTER_COLUMNS);
-//        setFilterLabelProvider(new FilterLabelProvider());
+        // Enable entry filtering by setting filter columns and label provider
+        setFilterColumns(FILTER_COLUMNS);
+        setFilterLabelProvider(new FilterLabelProvider());
     }
 
 }

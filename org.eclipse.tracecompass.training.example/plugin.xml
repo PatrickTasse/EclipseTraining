@@ -38,10 +38,8 @@
    <extension
          point="org.eclipse.tracecompass.tmf.core.dataprovider">
       <dataProviderFactory
-            class=""
-            id="">
-            <!--TODO: add data provider factory class: org.eclipse.tracecompass.training.example.ProcessingStatesDataProviderFactory -->
-            <!--TODO: add data provider ID: org.eclipse.tracecompass.training.example.dataprovider.processing.states -->
+            class="org.eclipse.tracecompass.training.example.ProcessingStatesDataProviderFactory"
+            id="org.eclipse.tracecompass.training.example.dataprovider.processing.states">
       </dataProviderFactory>
    </extension>
 </plugin>
