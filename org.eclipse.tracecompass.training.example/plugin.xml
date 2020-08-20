@@ -25,6 +25,20 @@
                class="org.eclipse.tracecompass.training.example.ProcessingTimeAnalysis">
          </analysisModuleClass>
       </output>
+      <output
+            class="org.eclipse.tracecompass.tmf.ui.analysis.TmfAnalysisViewOutput"
+            id="org.eclipse.tracecompass.training.example.processing.values.line">
+         <analysisModuleClass
+               class="org.eclipse.tracecompass.training.example.ProcessingTimeAnalysis">
+         </analysisModuleClass>
+      </output>
+      <output
+            class="org.eclipse.tracecompass.tmf.ui.analysis.TmfAnalysisViewOutput"
+            id="org.eclipse.tracecompass.training.example.processing.values.scatter">
+         <analysisModuleClass
+               class="org.eclipse.tracecompass.training.example.ProcessingTimeAnalysis">
+         </analysisModuleClass>
+      </output>
    </extension>
    <extension
          point="org.eclipse.ui.views">
@@ -34,12 +48,36 @@
             name="Processing States"
             restorable="true">
       </view>
+      <view
+            class="org.eclipse.tracecompass.training.example.processing.views.ProcessingValuesLineView"
+            id="org.eclipse.tracecompass.training.example.processing.values.line"
+            name="Processing Values Line"
+            restorable="true">
+      </view>
+      <view
+            class="org.eclipse.tracecompass.training.example.processing.views.ProcessingValuesScatterView"
+            id="org.eclipse.tracecompass.training.example.processing.values.scatter"
+            name="Processing Values Scatter"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.tracecompass.tmf.core.dataprovider">
       <dataProviderFactory
             class="org.eclipse.tracecompass.training.example.ProcessingStatesDataProviderFactory"
             id="org.eclipse.tracecompass.training.example.dataprovider.processing.states">
+      </dataProviderFactory>
+      <dataProviderFactory
+            class=""
+            id="">
+            <!--TODO: add data provider factory class: org.eclipse.tracecompass.training.example.ProcessingValuesScatterDataProviderFactory -->
+            <!--TODO: add data provider ID: org.eclipse.tracecompass.training.example.dataprovider.processing.values.scatter -->
+      </dataProviderFactory>
+      <dataProviderFactory
+            class=""
+            id="">
+            <!--TODO: add data provider factory class: org.eclipse.tracecompass.training.example.ProcessingValuesLineDataProviderFactory -->
+            <!--TODO: add data provider ID: org.eclipse.tracecompass.training.example.dataprovider.processing.values.line -->
       </dataProviderFactory>
    </extension>
 </plugin>
