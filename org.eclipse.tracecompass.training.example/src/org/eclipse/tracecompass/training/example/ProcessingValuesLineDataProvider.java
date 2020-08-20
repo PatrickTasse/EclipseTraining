@@ -75,35 +75,35 @@ public class ProcessingValuesLineDataProvider extends AbstractTreeCommonXDataPro
         long endTime = ss.getCurrentEndTime();
         List<@NonNull TmfTreeDataModel> entryList = new ArrayList<>();
 
-        // TODO: Create a root element for the trace
-//        long traceId = getId(ITmfStateSystem.ROOT_ATTRIBUTE);
-//        TmfTreeDataModel traceEntry = new TmfTreeDataModel(traceId, -1, Collections.singletonList(getTrace().getName()), false, null);
-//        entryList.add(traceEntry);
+        // Create a root element for the trace
+        long traceId = getId(ITmfStateSystem.ROOT_ATTRIBUTE);
+        TmfTreeDataModel traceEntry = new TmfTreeDataModel(traceId, -1, Collections.singletonList(getTrace().getName()), false, null);
+        entryList.add(traceEntry);
 
-        // TODO: Get all the <requester> attributes from the state system
-        // TODO: Get an id and create an element for each <requester>
-//        for (@NonNull Integer requesterQuark : ss.getQuarks("Requester", "*")) {
-//            long requesterId = getId(requesterQuark);
-//            String requesterName = ss.getAttributeName(requesterQuark);
-//            TmfTreeDataModel requesterEntry = new TmfTreeDataModel(requesterId, traceId, Collections.singletonList(requesterName), false, null);
-//            entryList.add(requesterEntry);
-            // TODO: Get all the <id> child attributes of each <requester>
-            // TODO: Get an id and create an element for each <id>
-//            for (@NonNull Integer idQuark : ss.getSubAttributes(requesterQuark, false)) {
-//                long idId = getId(idQuark);
-//                String idName = ss.getAttributeName(idQuark);
-//                String color = COLORS.get(Integer.parseInt(idName) % 4).toString().substring(0, 7);
-//                OutputElementStyle style = new OutputElementStyle(null, ImmutableMap.of(
-//                        StyleProperties.COLOR, color,
-//                        StyleProperties.SERIES_STYLE, StyleProperties.SeriesStyle.DOT,
-//                        StyleProperties.WIDTH, 3));
-//                TmfTreeDataModel idEntry = new TmfTreeDataModel(idId, requesterId, Collections.singletonList(idName), true, style);
-//                entryList.add(idEntry);
-//            }
-//        }
+        // Get all the <requester> attributes from the state system
+        // Get an id and create an element for each <requester>
+        for (@NonNull Integer requesterQuark : ss.getQuarks("Requester", "*")) {
+            long requesterId = getId(requesterQuark);
+            String requesterName = ss.getAttributeName(requesterQuark);
+            TmfTreeDataModel requesterEntry = new TmfTreeDataModel(requesterId, traceId, Collections.singletonList(requesterName), false, null);
+            entryList.add(requesterEntry);
+            // Get all the <id> child attributes of each <requester>
+            // Get an id and create an element for each <id>
+            for (@NonNull Integer idQuark : ss.getSubAttributes(requesterQuark, false)) {
+                long idId = getId(idQuark);
+                String idName = ss.getAttributeName(idQuark);
+                String color = COLORS.get(Integer.parseInt(idName) % 4).toString().substring(0, 7);
+                OutputElementStyle style = new OutputElementStyle(null, ImmutableMap.of(
+                        StyleProperties.COLOR, color,
+                        StyleProperties.SERIES_STYLE, StyleProperties.SeriesStyle.DOT,
+                        StyleProperties.WIDTH, 3));
+                TmfTreeDataModel idEntry = new TmfTreeDataModel(idId, requesterId, Collections.singletonList(idName), true, style);
+                entryList.add(idEntry);
+            }
+        }
 
-        // TODO: Return the list of all created elements
-//        return new TmfTreeModel<>(Collections.singletonList("Requester"), ImmutableList.copyOf(entryList));
+        // Return the list of all created elements
+        return new TmfTreeModel<>(Collections.singletonList("Requester"), ImmutableList.copyOf(entryList));
     }
 
     @Deprecated
@@ -114,79 +114,79 @@ public class ProcessingValuesLineDataProvider extends AbstractTreeCommonXDataPro
 
     @Override
     protected @Nullable Collection<IYModel> getYSeriesModels(ITmfStateSystem ss, Map<String, Object> fetchParameters, @Nullable IProgressMonitor monitor) throws StateSystemDisposedException {
-        // TODO: Extract the requested timestamps and ids from the parameters
-//        List<@NonNull Long> selectedItems = DataProviderParameterUtils.extractSelectedItems(fetchParameters);
-//        List<Long> timeRequested = DataProviderParameterUtils.extractTimeRequested(fetchParameters);
-//        long start = Math.max(ss.getStartTime(), timeRequested.get(0));
-//        long end = Math.min(ss.getCurrentEndTime(), Iterables.getLast(timeRequested));
-//        if (end < start) {
-//            return Collections.emptyList();
-//        }
-        // TODO: Get the ids to quarks map for the requested ids
-//        Map<@NonNull Long, @NonNull Integer> idsToQuark = getSelectedEntries(selectedItems);
+        // Extract the requested timestamps and ids from the parameters
+        List<@NonNull Long> selectedItems = DataProviderParameterUtils.extractSelectedItems(fetchParameters);
+        List<Long> timeRequested = DataProviderParameterUtils.extractTimeRequested(fetchParameters);
+        long start = Math.max(ss.getStartTime(), timeRequested.get(0));
+        long end = Math.min(ss.getCurrentEndTime(), Iterables.getLast(timeRequested));
+        if (end < start) {
+            return Collections.emptyList();
+        }
+        // Get the ids to quarks map for the requested ids
+        Map<@NonNull Long, @NonNull Integer> idsToQuark = getSelectedEntries(selectedItems);
 
-        // TODO: Compile the list of quarks needed to get y-value data from state system
-//        Collection<@NonNull Integer> quarks = new ArrayList<>();
-//        List<@NonNull Integer> seriesQuarks = ss.getQuarks("Requester", "*", "*");
-        // TODO: Keep only the selected quarks that belong to a series
-//        quarks.addAll(idsToQuark.values());
-//        quarks.retainAll(seriesQuarks);
-//        for (Integer quark : Lists.newArrayList(quarks)) {
-//            int numberQuark = ss.optQuarkRelative(quark, "number");
-//            if (numberQuark != ITmfStateSystem.INVALID_ATTRIBUTE) {
-//                quarks.add(numberQuark);
-//            } else {
-//                quarks.remove(quark);
-//            }
-//        }
+        // Compile the list of quarks needed to get y-value data from state system
+        Collection<@NonNull Integer> quarks = new ArrayList<>();
+        List<@NonNull Integer> seriesQuarks = ss.getQuarks("Requester", "*", "*");
+        // Keep only the selected quarks that belong to a series
+        quarks.addAll(idsToQuark.values());
+        quarks.retainAll(seriesQuarks);
+        for (Integer quark : Lists.newArrayList(quarks)) {
+            int numberQuark = ss.optQuarkRelative(quark, "number");
+            if (numberQuark != ITmfStateSystem.INVALID_ATTRIBUTE) {
+                quarks.add(numberQuark);
+            } else {
+                quarks.remove(quark);
+            }
+        }
 
-        // TODO: Do a 2D query of the state system and collect the returned intervals in a tree multimap per quark
-//        TreeMultimap<Integer, ITmfStateInterval> intervals = TreeMultimap.create(Comparator.naturalOrder(),
-//                Comparator.comparing(ITmfStateInterval::getStartTime));
-//        for (ITmfStateInterval interval : ss.query2D(quarks, start, end)) {
-//            intervals.put(interval.getAttribute(), interval);
-//        }
+        // Do a 2D query of the state system and collect the returned intervals in a tree multimap per quark
+        TreeMultimap<Integer, ITmfStateInterval> intervals = TreeMultimap.create(Comparator.naturalOrder(),
+                Comparator.comparing(ITmfStateInterval::getStartTime));
+        for (ITmfStateInterval interval : ss.query2D(quarks, start, end)) {
+            intervals.put(interval.getAttribute(), interval);
+        }
 
-//        Collection<IYModel> yModels = new ArrayList<>();
-        // TODO: For each id/quark pair, get the list of intervals
-//        for (Entry<@NonNull Long, @NonNull Integer> entry : idsToQuark.entrySet()) {
-//            Long entryId = entry.getKey();
-//            Integer quark = entry.getValue();
-//            if (!seriesQuarks.contains(quark)) {
-//                // TODO: Ignore id/quark pairs that do not have a series
-//                continue;
-//            }
-//            Iterator<ITmfStateInterval> iterator = intervals.get(quark).iterator();
-//            double[] yValues = new double[timeRequested.size()];
-//            ITmfStateInterval interval = null;
-            // TODO: For each requested timestamp find the corresponding state interval
-//            for (int i = 0; i < timeRequested.size(); i++) {
-//                long time0 = timeRequested.get(i);
-//                long time1 = i + 1 < timeRequested.size() ? timeRequested.get(i + 1) : Long.MAX_VALUE;
-//                while ((interval == null || interval.getEndTime() < time0) ||
-//                        !Integer.valueOf(IEventConstants.ProcessingStates.PROCESSING.ordinal()).equals(interval.getValue())) {
-//                    if (iterator.hasNext()) {
-//                        interval = iterator.next();
-//                    } else {
-//                        interval = null;
-//                        break;
-//                    }
-//                }
-                // TODO: If interval is the correct state, find the corresponding value and add to an array
-                // TODO: Otherwise add zero value to the array
-//                if (interval != null && interval.getStartTime() < time1 && interval.getEndTime() >= time0) {
-//                    int numberQuark = ss.optQuarkRelative(quark, "number");
-//                    ITmfStateInterval numberInterval = getIntervalAt(intervals.get(numberQuark), interval.getStartTime());
-//                    yValues[i] = numberInterval.getValueLong();
-//                } else {
-//                    yValues[i] = 0.0;
-//                }
-//            }
-            // TODO: Create a y-series model and add to a list
-//            yModels.add(new YModel(entryId, ss.getAttributeName(quark), yValues));
-//        }
-        // TODO: Return the list of all created y-series models
-//        return yModels;
+        Collection<IYModel> yModels = new ArrayList<>();
+        // For each id/quark pair, get the list of intervals
+        for (Entry<@NonNull Long, @NonNull Integer> entry : idsToQuark.entrySet()) {
+            Long entryId = entry.getKey();
+            Integer quark = entry.getValue();
+            if (!seriesQuarks.contains(quark)) {
+                // Ignore id/quark pairs that do not have a series
+                continue;
+            }
+            Iterator<ITmfStateInterval> iterator = intervals.get(quark).iterator();
+            double[] yValues = new double[timeRequested.size()];
+            ITmfStateInterval interval = null;
+            // For each requested timestamp find the corresponding state interval
+            for (int i = 0; i < timeRequested.size(); i++) {
+                long time0 = timeRequested.get(i);
+                long time1 = i + 1 < timeRequested.size() ? timeRequested.get(i + 1) : Long.MAX_VALUE;
+                while ((interval == null || interval.getEndTime() < time0) ||
+                        !Integer.valueOf(IEventConstants.ProcessingStates.PROCESSING.ordinal()).equals(interval.getValue())) {
+                    if (iterator.hasNext()) {
+                        interval = iterator.next();
+                    } else {
+                        interval = null;
+                        break;
+                    }
+                }
+                // If interval is the correct state, find the corresponding value and add to an array
+                // Otherwise add zero value to the array
+                if (interval != null && interval.getStartTime() < time1 && interval.getEndTime() >= time0) {
+                    int numberQuark = ss.optQuarkRelative(quark, "number");
+                    ITmfStateInterval numberInterval = getIntervalAt(intervals.get(numberQuark), interval.getStartTime());
+                    yValues[i] = numberInterval.getValueLong();
+                } else {
+                    yValues[i] = 0.0;
+                }
+            }
+            // Create a y-series model and add to a list
+            yModels.add(new YModel(entryId, ss.getAttributeName(quark), yValues));
+        }
+        // Return the list of all created y-series models
+        return yModels;
     }
 
     private static @Nullable ITmfStateInterval getIntervalAt(NavigableSet<ITmfStateInterval> intervals, long time) {

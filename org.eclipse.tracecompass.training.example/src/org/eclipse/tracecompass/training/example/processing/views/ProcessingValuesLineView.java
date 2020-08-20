@@ -27,25 +27,25 @@ public class ProcessingValuesLineView extends TmfChartView {
     public static final String ID = "org.eclipse.tracecompass.training.example.processing.values.line";
 
     public ProcessingValuesLineView() {
-        // TODO: Call super with view ID
-//        super(ID);
+        // Call super with view ID
+        super(ID);
     }
 
-    // TODO: Override createLeftChildViewer() to return an AbstractSelectTreeViewer2
-//    @Override
-//    protected @NonNull TmfViewer createLeftChildViewer(Composite parent) {
-//        return new AbstractSelectTreeViewer2(parent, 1, ProcessingValuesLineDataProvider.ID) {
-//            @Override
-//            protected ITmfTreeColumnDataProvider getColumnDataProvider() {
-//                return () -> ImmutableList.of(new TmfTreeColumnData("Challenger"), new TmfTreeColumnData("Legend"));
-//            }
-//        };
-//    }
+    // Override createLeftChildViewer() to return an AbstractSelectTreeViewer2
+    @Override
+    protected @NonNull TmfViewer createLeftChildViewer(Composite parent) {
+        return new AbstractSelectTreeViewer2(parent, 1, ProcessingValuesLineDataProvider.ID) {
+            @Override
+            protected ITmfTreeColumnDataProvider getColumnDataProvider() {
+                return () -> ImmutableList.of(new TmfTreeColumnData("Challenger"), new TmfTreeColumnData("Legend"));
+            }
+        };
+    }
 
-    // TODO: Override createChartViewer() to return a TmfFilteredXYChartViewer
-//    @Override
-//    protected TmfXYChartViewer createChartViewer(Composite parent) {
-//        TmfXYChartSettings settings = new TmfXYChartSettings("Processing Values", "Time", "Value", 0.2);
-//        return new TmfFilteredXYChartViewer(parent, settings, ProcessingValuesLineDataProvider.ID);
-//    }
+    // Override createChartViewer() to return a TmfFilteredXYChartViewer
+    @Override
+    protected TmfXYChartViewer createChartViewer(Composite parent) {
+        TmfXYChartSettings settings = new TmfXYChartSettings("Processing Values", "Time", "Value", 0.2);
+        return new TmfFilteredXYChartViewer(parent, settings, ProcessingValuesLineDataProvider.ID);
+    }
 }

@@ -68,16 +68,12 @@
             id="org.eclipse.tracecompass.training.example.dataprovider.processing.states">
       </dataProviderFactory>
       <dataProviderFactory
-            class=""
-            id="">
-            <!--TODO: add data provider factory class: org.eclipse.tracecompass.training.example.ProcessingValuesScatterDataProviderFactory -->
-            <!--TODO: add data provider ID: org.eclipse.tracecompass.training.example.dataprovider.processing.values.scatter -->
+            class="org.eclipse.tracecompass.training.example.ProcessingValuesScatterDataProviderFactory"
+            id="org.eclipse.tracecompass.training.example.dataprovider.processing.values.scatter">
       </dataProviderFactory>
       <dataProviderFactory
-            class=""
-            id="">
-            <!--TODO: add data provider factory class: org.eclipse.tracecompass.training.example.ProcessingValuesLineDataProviderFactory -->
-            <!--TODO: add data provider ID: org.eclipse.tracecompass.training.example.dataprovider.processing.values.line -->
+            class="org.eclipse.tracecompass.training.example.ProcessingValuesLineDataProviderFactory"
+            id="org.eclipse.tracecompass.training.example.dataprovider.processing.values.line">
       </dataProviderFactory>
    </extension>
 </plugin>
