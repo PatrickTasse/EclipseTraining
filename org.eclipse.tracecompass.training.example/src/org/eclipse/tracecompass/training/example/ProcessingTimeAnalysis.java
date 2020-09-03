@@ -93,71 +93,71 @@ public class ProcessingTimeAnalysis extends TmfStateSystemAnalysisModule impleme
         if (requestersQuark == ITmfStateSystem.INVALID_ATTRIBUTE) {
             return null;
         }
-        // TODO: Create a map of statistics models per type
-//        Map<@NonNull String, IStatistics<@NonNull ITmfStateInterval>> stats = new HashMap<>();
-        // TODO: Create an aggregated statistics model for total stats
-//        IStatistics<ITmfStateInterval> totalStats = new Statistics<>(ITmfStateInterval::getValueLong);
-        // TODO: Create an aggregated statistics model for each requester
-//        for (int requesterQuark : ss.getSubAttributes(requestersQuark, false)) {
-//            String requester = ss.getAttributeName(requesterQuark);
-//            IStatistics<ITmfStateInterval> requesterStats = new Statistics<>(ITmfStateInterval::getValueLong);
-            // TODO: Create a statistics model for each requester Id
-//            for (int idQuark : ss.getSubAttributes(requesterQuark, false)) {
-//                String id = ss.getAttributeName(idQuark);
-//                int numberQuark = ss.optQuarkRelative(idQuark, "number");
-//                if (numberQuark == ITmfStateSystem.INVALID_ATTRIBUTE) {
-//                    continue;
-//                }
-//                IStatistics<ITmfStateInterval> idStats = new Statistics<>(ITmfStateInterval::getValueLong);
-//                try {
-                    // TODO: Query the state intervals of the requester Id for the time range
-//                    for (ITmfStateInterval interval : ss.query2D(Arrays.asList(idQuark), start, end)) {
-                        // TODO: If the state is PROCESSING get the number interval at the start time
-//                        if (Integer.valueOf(IEventConstants.ProcessingStates.PROCESSING.ordinal()).equals(interval.getValue())
-//                                && interval.getStartTime() >= start && interval.getStartTime() <= end) {
-//                            ITmfStateInterval numberInterval = ss.querySingleState(interval.getStartTime(), numberQuark);
-                            // TODO: Update the requester Id statistics model with the number value
-//                            idStats.update(numberInterval);
-//                        }
-//                    }
-//                } catch (StateSystemDisposedException e) {
-//                    return null;
-//                }
-                // TODO: Add the requester Id stats to the map for type "requester/id"
-//                stats.put(requester + SEP + id, idStats);
-                // TODO: Merge the requester Id stats to the aggregate requester statistics model
-//                requesterStats.merge(idStats);
-//            }
-            // TODO: Add the requester stats to the map with for type "requester"
-//            stats.put(requester, requesterStats);
-            // TODO: Merge the requester stats to the aggregate total statistics model
-//            totalStats.merge(requesterStats);
-//        }
-        // TODO: Add the total stats to the map with for type "*"
-//        stats.put(TOTAL, totalStats);
-        // TODO: Return the map of statistics models
-//        return stats;
+        // Create a map of statistics models per type
+        Map<@NonNull String, IStatistics<@NonNull ITmfStateInterval>> stats = new HashMap<>();
+        // Create an aggregated statistics model for total stats
+        IStatistics<ITmfStateInterval> totalStats = new Statistics<>(ITmfStateInterval::getValueLong);
+        // Create an aggregated statistics model for each requester
+        for (int requesterQuark : ss.getSubAttributes(requestersQuark, false)) {
+            String requester = ss.getAttributeName(requesterQuark);
+            IStatistics<ITmfStateInterval> requesterStats = new Statistics<>(ITmfStateInterval::getValueLong);
+            // Create a statistics model for each requester Id
+            for (int idQuark : ss.getSubAttributes(requesterQuark, false)) {
+                String id = ss.getAttributeName(idQuark);
+                int numberQuark = ss.optQuarkRelative(idQuark, "number");
+                if (numberQuark == ITmfStateSystem.INVALID_ATTRIBUTE) {
+                    continue;
+                }
+                IStatistics<ITmfStateInterval> idStats = new Statistics<>(ITmfStateInterval::getValueLong);
+                try {
+                    // Query the state intervals of the requester Id for the time range
+                    for (ITmfStateInterval interval : ss.query2D(Arrays.asList(idQuark), start, end)) {
+                        // If the state is PROCESSING get the number interval at the start time
+                        if (Integer.valueOf(IEventConstants.ProcessingStates.PROCESSING.ordinal()).equals(interval.getValue())
+                                && interval.getStartTime() >= start && interval.getStartTime() <= end) {
+                            ITmfStateInterval numberInterval = ss.querySingleState(interval.getStartTime(), numberQuark);
+                            // Update the requester Id statistics model with the number value
+                            idStats.update(numberInterval);
+                        }
+                    }
+                } catch (StateSystemDisposedException e) {
+                    return null;
+                }
+                // Add the requester Id stats to the map for type "requester/id"
+                stats.put(requester + SEP + id, idStats);
+                // Merge the requester Id stats to the aggregate requester statistics model
+                requesterStats.merge(idStats);
+            }
+            // Add the requester stats to the map with for type "requester"
+            stats.put(requester, requesterStats);
+            // Merge the requester stats to the aggregate total statistics model
+            totalStats.merge(requesterStats);
+        }
+        // Add the total stats to the map with for type "*"
+        stats.put(TOTAL, totalStats);
+        // Return the map of statistics models
+        return stats;
     }
 
     @Override
     public @Nullable IStatistics<@NonNull ITmfStateInterval> getStatsForRange(long start, long end, IProgressMonitor monitor) {
-        // TODO: Get the stats per type for range and return the model for type "*"
-//        return getStatsPerTypeForRange(start, end, monitor).get(TOTAL);
+        // Get the stats per type for range and return the model for type "*"
+        return getStatsPerTypeForRange(start, end, monitor).get(TOTAL);
     }
 
     @Override
     public Map<String, IStatistics<@NonNull ITmfStateInterval>> getStatsPerType() {
-        // TODO: Get the stats per type for the range equal to the full range of state system
-//        ITmfStateSystem ss = getStateSystem();
-//        if (ss == null) {
-//            return null;
-//        }
-//        return getStatsPerTypeForRange(ss.getStartTime(), ss.getCurrentEndTime(), new NullProgressMonitor());
+        // Get the stats per type for the range equal to the full range of state system
+        ITmfStateSystem ss = getStateSystem();
+        if (ss == null) {
+            return null;
+        }
+        return getStatsPerTypeForRange(ss.getStartTime(), ss.getCurrentEndTime(), new NullProgressMonitor());
     }
 
     @Override
     public @Nullable IStatistics<@NonNull ITmfStateInterval> getStatsTotal() {
-        // TODO: Get the total stats per type and return the model for type "*"
-//        return getStatsPerType().get(TOTAL);
+        // Get the total stats per type and return the model for type "*"
+        return getStatsPerType().get(TOTAL);
     }
 }

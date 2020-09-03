@@ -20,14 +20,14 @@ public class ProcessingValuesStatisticsDataProviderFactory implements IDataProvi
 
     @Override
     public @Nullable ITmfTreeDataProvider<? extends ITmfTreeDataModel> createProvider(@NonNull ITmfTrace trace) {
-        // TODO: Get the analysis module for the trace
-        // TODO: Schedule the analysis
-        // TODO: Create and return a data provider instance
-//        ProcessingTimeAnalysis module = TmfTraceUtils.getAnalysisModuleOfClass(trace, ProcessingTimeAnalysis.class, ProcessingTimeAnalysis.ID);
-//        if (module != null) {
-//            module.schedule();
-//            return new ProcessingValuesStatisticsDataProvider(trace, module);
-//        }
+        // Get the analysis module for the trace
+        ProcessingTimeAnalysis module = TmfTraceUtils.getAnalysisModuleOfClass(trace, ProcessingTimeAnalysis.class, ProcessingTimeAnalysis.ID);
+        if (module != null) {
+            // Schedule the analysis
+            module.schedule();
+            // Create and return a data provider instance
+            return new ProcessingValuesStatisticsDataProvider(trace, module);
+        }
         return null;
     }
 

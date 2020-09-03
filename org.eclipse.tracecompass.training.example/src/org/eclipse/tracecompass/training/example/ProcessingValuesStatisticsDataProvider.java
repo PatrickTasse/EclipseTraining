@@ -56,67 +56,67 @@ public class ProcessingValuesStatisticsDataProvider extends AbstractTreeDataProv
         long endTime = ss.getCurrentEndTime();
         List<@NonNull TmfTreeDataModel> entryList = new ArrayList<>();
 
-        // TODO: Create a root element for the trace
-//        long traceId = getId(ITmfStateSystem.ROOT_ATTRIBUTE);
-//        TmfTreeDataModel traceEntry = new TmfTreeDataModel(traceId, -1, Collections.singletonList(getTrace().getName()), false, null);
-//        entryList.add(traceEntry);
-        // TODO: Add the Total sub-tree
-        // TODO: Get the total statistics per type
-//        Map<String, IStatistics<@NonNull ITmfStateInterval>> statsMap = getAnalysisModule().getStatsPerType();
-        // TODO: Add the Total aggregated element
-//        long totalId = getEntryId("Total");
-//        TmfTreeDataModel totalEntry = new TmfTreeDataModel(totalId, traceId, getLabels("Total", ProcessingTimeAnalysis.TOTAL, statsMap), false, null);
-//        entryList.add(totalEntry);
-        // TODO: Get all the <requester> attributes from the state system
-        // TODO: Get an id and create an aggregated element for each <requester>
-//        for (@NonNull Integer requesterQuark : ss.getQuarks("Requester", "*")) {
-//            long requesterId = getId(requesterQuark);
-//            String requesterName = ss.getAttributeName(requesterQuark);
-//            TmfTreeDataModel requesterEntry = new TmfTreeDataModel(requesterId, totalId, getLabels(requesterName, requesterName, statsMap), false, null);
-//            entryList.add(requesterEntry);
-            // TODO: Get all the <id> child attributes of each <requester>
-            // TODO: Get an id and create an element for each <id>
-//            for (@NonNull Integer idQuark : ss.getSubAttributes(requesterQuark, false)) {
-//                long idId = getId(idQuark);
-//                String idName = ss.getAttributeName(idQuark);
-//                String key = requesterName + ProcessingTimeAnalysis.SEP + idName;
-//                TmfTreeDataModel idEntry = new TmfTreeDataModel(idId, requesterId, getLabels(idName, key, statsMap), false, null);
-//                entryList.add(idEntry);
-//            }
-//        }
-        // TODO: Add the Selection sub-tree if isFiltered is true
-//        Boolean isFiltered = DataProviderParameterUtils.extractIsFiltered(fetchParameters);
-//        if (Boolean.TRUE.equals(isFiltered)) {
-            // TODO: Get the range statistics per type
-//            List<Long> timeRequested = DataProviderParameterUtils.extractTimeRequested(fetchParameters);
-//            long start = Math.max(ss.getStartTime(), timeRequested.get(0));
-//            long end = Math.min(ss.getCurrentEndTime(), Iterables.getLast(timeRequested));
-//            Map<String, IStatistics<@NonNull ITmfStateInterval>> rangeStatsMap = getAnalysisModule().getStatsPerTypeForRange(start, end, monitor);
-            // TODO: Add the Selection aggregated element
-//            long selectionId = getEntryId("Selection");
-//            TmfTreeDataModel selectionEntry = new TmfTreeDataModel(selectionId, traceId, getLabels("Selection", ProcessingTimeAnalysis.TOTAL, rangeStatsMap), false, null);
-//            entryList.add(selectionEntry);
-            // TODO: Get all the <requester> attributes from the state system
-            // TODO: Get an id and create an aggregated element for each <requester>
-//            for (@NonNull Integer requesterQuark : ss.getQuarks("Requester", "*")) {
-//                long requesterId = getId(requesterQuark);
-//                String requesterName = ss.getAttributeName(requesterQuark);
-//                TmfTreeDataModel requesterEntry = new TmfTreeDataModel(requesterId, selectionId, getLabels(requesterName, requesterName, rangeStatsMap), false, null);
-//                entryList.add(requesterEntry);
-                // TODO: Get all the <id> child attributes of each <requester>
-                // TODO: Get an id and create an element for each <id>
-//                for (@NonNull Integer idQuark : ss.getSubAttributes(requesterQuark, false)) {
-//                    long idId = getId(idQuark);
-//                    String idName = ss.getAttributeName(idQuark);
-//                    String key = requesterName + ProcessingTimeAnalysis.SEP + idName;
-//                    TmfTreeDataModel idEntry = new TmfTreeDataModel(idId, requesterId, getLabels(idName, key, rangeStatsMap), false, null);
-//                    entryList.add(idEntry);
-//                }
-//            }
-//        }
+        // Create a root element for the trace
+        long traceId = getId(ITmfStateSystem.ROOT_ATTRIBUTE);
+        TmfTreeDataModel traceEntry = new TmfTreeDataModel(traceId, -1, Collections.singletonList(getTrace().getName()), false, null);
+        entryList.add(traceEntry);
+        // Add the Total sub-tree
+        // Get the total statistics per type
+        Map<String, IStatistics<@NonNull ITmfStateInterval>> statsMap = getAnalysisModule().getStatsPerType();
+        // Add the Total aggregated element
+        long totalId = getEntryId("Total");
+        TmfTreeDataModel totalEntry = new TmfTreeDataModel(totalId, traceId, getLabels("Total", ProcessingTimeAnalysis.TOTAL, statsMap), false, null);
+        entryList.add(totalEntry);
+        // Get all the <requester> attributes from the state system
+        // Get an id and create an aggregated element for each <requester>
+        for (@NonNull Integer requesterQuark : ss.getQuarks("Requester", "*")) {
+            long requesterId = getId(requesterQuark);
+            String requesterName = ss.getAttributeName(requesterQuark);
+            TmfTreeDataModel requesterEntry = new TmfTreeDataModel(requesterId, totalId, getLabels(requesterName, requesterName, statsMap), false, null);
+            entryList.add(requesterEntry);
+            // Get all the <id> child attributes of each <requester>
+            // Get an id and create an element for each <id>
+            for (@NonNull Integer idQuark : ss.getSubAttributes(requesterQuark, false)) {
+                long idId = getId(idQuark);
+                String idName = ss.getAttributeName(idQuark);
+                String key = requesterName + ProcessingTimeAnalysis.SEP + idName;
+                TmfTreeDataModel idEntry = new TmfTreeDataModel(idId, requesterId, getLabels(idName, key, statsMap), false, null);
+                entryList.add(idEntry);
+            }
+        }
+        // Add the Selection sub-tree if isFiltered is true
+        Boolean isFiltered = DataProviderParameterUtils.extractIsFiltered(fetchParameters);
+        if (Boolean.TRUE.equals(isFiltered)) {
+            // Get the range statistics per type
+            List<Long> timeRequested = DataProviderParameterUtils.extractTimeRequested(fetchParameters);
+            long start = Math.max(ss.getStartTime(), timeRequested.get(0));
+            long end = Math.min(ss.getCurrentEndTime(), Iterables.getLast(timeRequested));
+            Map<String, IStatistics<@NonNull ITmfStateInterval>> rangeStatsMap = getAnalysisModule().getStatsPerTypeForRange(start, end, monitor);
+            // Add the Selection aggregated element
+            long selectionId = getEntryId("Selection");
+            TmfTreeDataModel selectionEntry = new TmfTreeDataModel(selectionId, traceId, getLabels("Selection", ProcessingTimeAnalysis.TOTAL, rangeStatsMap), false, null);
+            entryList.add(selectionEntry);
+            // Get all the <requester> attributes from the state system
+            // Get an id and create an aggregated element for each <requester>
+            for (@NonNull Integer requesterQuark : ss.getQuarks("Requester", "*")) {
+                long requesterId = getId(requesterQuark);
+                String requesterName = ss.getAttributeName(requesterQuark);
+                TmfTreeDataModel requesterEntry = new TmfTreeDataModel(requesterId, selectionId, getLabels(requesterName, requesterName, rangeStatsMap), false, null);
+                entryList.add(requesterEntry);
+                // Get all the <id> child attributes of each <requester>
+                // Get an id and create an element for each <id>
+                for (@NonNull Integer idQuark : ss.getSubAttributes(requesterQuark, false)) {
+                    long idId = getId(idQuark);
+                    String idName = ss.getAttributeName(idQuark);
+                    String key = requesterName + ProcessingTimeAnalysis.SEP + idName;
+                    TmfTreeDataModel idEntry = new TmfTreeDataModel(idId, requesterId, getLabels(idName, key, rangeStatsMap), false, null);
+                    entryList.add(idEntry);
+                }
+            }
+        }
 
-        // TODO: Return the list of all created elements
-//        return new TmfTreeModel<>(ImmutableList.of("Challenger", "Count", "Minimum", "Maximum", "Average"), ImmutableList.copyOf(entryList));
+        // Return the list of all created elements
+        return new TmfTreeModel<>(ImmutableList.of("Challenger", "Count", "Minimum", "Maximum", "Average"), ImmutableList.copyOf(entryList));
     }
 
     private static List<String> getLabels(String name, String key, Map<String, IStatistics<@NonNull ITmfStateInterval>> statsMap) {

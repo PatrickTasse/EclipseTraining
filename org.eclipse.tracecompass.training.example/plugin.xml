@@ -89,10 +89,8 @@
             id="org.eclipse.tracecompass.training.example.dataprovider.processing.values.line">
       </dataProviderFactory>
       <dataProviderFactory
-            class=""
-            id="">
-            <!--TODO: add data provider factory class: org.eclipse.tracecompass.training.example.ProcessingValuesStatisticsDataProviderFactory -->
-            <!--TODO: add data provider ID: org.eclipse.tracecompass.training.example.dataprovider.processing.values.statistics -->
+            class="org.eclipse.tracecompass.training.example.ProcessingValuesStatisticsDataProviderFactory"
+            id="org.eclipse.tracecompass.training.example.dataprovider.processing.values.statistics">
       </dataProviderFactory>
    </extension>
 </plugin>
