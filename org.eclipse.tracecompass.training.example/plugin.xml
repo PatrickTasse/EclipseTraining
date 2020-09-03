@@ -39,6 +39,13 @@
                class="org.eclipse.tracecompass.training.example.ProcessingTimeAnalysis">
          </analysisModuleClass>
       </output>
+      <output
+            class="org.eclipse.tracecompass.tmf.ui.analysis.TmfAnalysisViewOutput"
+            id="org.eclipse.tracecompass.training.example.processing.values.statistics">
+         <analysisModuleClass
+               class="org.eclipse.tracecompass.training.example.ProcessingTimeAnalysis">
+         </analysisModuleClass>
+      </output>
    </extension>
    <extension
          point="org.eclipse.ui.views">
@@ -60,6 +67,12 @@
             name="Processing Values Scatter"
             restorable="true">
       </view>
+      <view
+            class="org.eclipse.tracecompass.training.example.processing.views.ProcessingValuesStatisticsView"
+            id="org.eclipse.tracecompass.training.example.processing.values.statistics"
+            name="Processing Values Statistics"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.tracecompass.tmf.core.dataprovider">
@@ -74,6 +87,12 @@
       <dataProviderFactory
             class="org.eclipse.tracecompass.training.example.ProcessingValuesLineDataProviderFactory"
             id="org.eclipse.tracecompass.training.example.dataprovider.processing.values.line">
+      </dataProviderFactory>
+      <dataProviderFactory
+            class=""
+            id="">
+            <!--TODO: add data provider factory class: org.eclipse.tracecompass.training.example.ProcessingValuesStatisticsDataProviderFactory -->
+            <!--TODO: add data provider ID: org.eclipse.tracecompass.training.example.dataprovider.processing.values.statistics -->
       </dataProviderFactory>
    </extension>
 </plugin>
